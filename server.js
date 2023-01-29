@@ -1,5 +1,16 @@
-const app = require('./app')
+const app = require("./app");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+const { DEFAULT_URI, DEFAULT_PORT } = process.env;
 
-app.listen(3000, () => {
-  console.log("Server running. Use our API on port: 3000")
-})
+mongoose
+  .connect(DEFAULT_URI)
+  .then(() => {
+    app.listen(DEFAULT_PORT);
+    console.log("Database connection successful");
+  })
+  .catch((error) => {
+    console.log(error.message);
+    process.exit(1);
+  });
