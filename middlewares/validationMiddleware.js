@@ -1,8 +1,5 @@
 const Joi = require("joi");
 
-const phoneNumberValidationPattern =
-  /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
-
 const addNewContactValidation = (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string().alphanum().min(3).max(30).required(),
@@ -14,10 +11,8 @@ const addNewContactValidation = (req, res, next) => {
       })
       .required(),
 
-    phone: Joi.string()
-      .length(15)
-      .pattern(phoneNumberValidationPattern)
-      .required(),
+    phone: Joi.string().min(7).required(),
+    favorite: Joi.bool().default(false),
   });
 
   const { error } = schema.validate(req.body);
@@ -36,7 +31,7 @@ const updateContactValidation = (req, res, next) => {
       tlds: { allow: ["com", "net"] },
     }),
 
-    phone: Joi.string().length(15).pattern(phoneNumberValidationPattern),
+    phone: Joi.string().length(15),
   }).min(1);
 
   const { error } = schema.validate(req.body);
@@ -45,4 +40,21 @@ const updateContactValidation = (req, res, next) => {
   }
   next(error);
 };
-module.exports = { addNewContactValidation, updateContactValidation };
+
+const updateFavStatusValidation = (req, res, next) => {
+  const schema = Joi.object({
+    favorite: Joi.bool().required(),
+  });
+
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: "missing fields favorite" });
+  }
+  next(error);
+};
+
+module.exports = {
+  addNewContactValidation,
+  updateContactValidation,
+  updateFavStatusValidation,
+};
