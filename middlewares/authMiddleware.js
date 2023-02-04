@@ -18,8 +18,6 @@ const auth = async (req, res, next) => {
     const user = await User.findById(id);
 
     if (!user || !user.token) {
-      console.log(user);
-      console.log(user.token);
       res.status(401).json("Not authorized user");
     }
 
