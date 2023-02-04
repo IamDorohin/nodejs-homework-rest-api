@@ -9,7 +9,6 @@ const { SECRET_KEY } = process.env;
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-
   const comparedPassword = await bcrypt.compare(password, user.password);
 
   if (!user || !comparedPassword) {
@@ -18,6 +17,8 @@ const login = async (req, res) => {
 
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY);
+  await User.findByIdAndUpdate(user._id, { token });
+
   res.json({
     token: token,
     user: { email: email, subscription: user.subscription },

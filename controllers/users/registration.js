@@ -14,8 +14,12 @@ const registration = async (req, res) => {
     password,
     parseInt(bcrypt.genSalt(10))
   );
-  const result = await User.create({ email, password: hashedPassword });
-  res.status(201).json(result);
+  const { subscription } = await User.create({
+    email,
+    password: hashedPassword,
+  });
+
+  res.status(201).json({ email, subscription });
 };
 
 module.exports = registration;
