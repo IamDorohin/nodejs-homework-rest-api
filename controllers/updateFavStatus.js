@@ -1,10 +1,19 @@
 const Contact = require("../models/contact");
 
 const updateFavStatus = async (req, res) => {
+  const { _id } = req.user;
   const { id } = req.params;
-  const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+
+  const requestData = { _id: id, owner: _id };
+
+  const result = await Contact.findOneAndUpdate(requestData, req.body, {
+    new: true,
+  });
+
   if (!result) {
-    return res.status(404).json({ message: "Not Found" });
+    res
+      .status(404)
+      .json({ message: "You do not have permission to change this contact" });
   }
   return res.status(200).json(result);
 };

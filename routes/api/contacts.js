@@ -13,17 +13,24 @@ const {
   updateContactValidation,
   updateFavStatusValidation,
 } = require("../../middlewares/validationMiddleware");
+const auth = require("../../middlewares/authMiddleware");
 const router = express.Router();
 
-router.get("/", controllerWrapper(getAll));
-router.get("/:id", controllerWrapper(getById));
-router.post("/", addNewContactValidation, controllerWrapper(addNew));
-router.put("/:id", updateContactValidation, controllerWrapper(updateById));
+router.get("/", auth, controllerWrapper(getAll));
+router.get("/:id", auth, controllerWrapper(getById));
+router.post("/", auth, addNewContactValidation, controllerWrapper(addNew));
+router.put(
+  "/:id",
+  auth,
+  updateContactValidation,
+  controllerWrapper(updateById)
+);
 router.patch(
   "/:id/favorite",
+  auth,
   updateFavStatusValidation,
   controllerWrapper(updateFavStatus)
 );
-router.delete("/:id", controllerWrapper(removeById));
+router.delete("/:id", auth, controllerWrapper(removeById));
 
 module.exports = router;
