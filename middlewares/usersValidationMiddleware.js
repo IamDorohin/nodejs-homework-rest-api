@@ -10,7 +10,7 @@ const registrationValidation = (req, res, next) => {
       .required(),
 
     password: Joi.string().min(6).max(30).required(),
-    subscription: Joi.string.allow("starter", "pro", "business"),
+    subscription: Joi.string().allow("starter", "pro", "business"),
   });
 
   const { error } = schema.validate(req.body);
@@ -46,12 +46,10 @@ const subscriptionTypeValidation = (req, res, next) => {
 
   const { error } = schema.validate(req.body);
   if (error) {
-    return res
-      .status(400)
-      .json({
-        message:
-          "INvalid type of subscription! Valid values are: starter, pro, business",
-      });
+    return res.status(400).json({
+      message:
+        "INvalid type of subscription! Valid values are: starter, pro, business",
+    });
   }
   next(error);
 };
