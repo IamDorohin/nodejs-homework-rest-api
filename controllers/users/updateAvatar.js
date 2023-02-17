@@ -2,6 +2,8 @@ const User = require("../../models/user");
 const path = require("path");
 const fs = require("fs/promises");
 const { avatarResizer } = require("../../helpers");
+const { v4 } = require("uuid");
+
 const avatarsDirectory = path.join(__dirname, "../../", "public", "avatars");
 
 const updateAvatar = async (req, res) => {
@@ -9,7 +11,7 @@ const updateAvatar = async (req, res) => {
   const { _id } = req.user;
 
   try {
-    const uploadResult = path.join(avatarsDirectory, `${_id}_${originalname}`);
+    const uploadResult = path.join(avatarsDirectory, `${v4()}_${originalname}`);
     avatarResizer(tempDirectory, uploadResult);
     await fs.rename(tempDirectory, uploadResult);
     const avatarURL = path.join("public", "avatars", originalname);
