@@ -6,6 +6,7 @@ const {
   logout,
   getCurrent,
   updateSubscription,
+  updateAvatar,
 } = require("../../controllers/users");
 const {
   registrationValidation,
@@ -13,6 +14,7 @@ const {
   subscriptionTypeValidation,
 } = require("../../middlewares/usersValidationMiddleware");
 const auth = require("../../middlewares/authMiddleware");
+const uploadMiddleware = require("../../middlewares/uploadMiddleware");
 
 const router = express.Router();
 
@@ -29,6 +31,13 @@ router.patch(
   controllerWrapper(updateSubscription)
 );
 
+router.patch(
+  "/avatars",
+  auth,
+  uploadMiddleware.single("avatar"),
+  controllerWrapper(updateAvatar)
+);
+
 router.post("/login", loginValidation, controllerWrapper(login));
 router.get("/current", auth, controllerWrapper(getCurrent));
 router.get("/logout", auth, controllerWrapper(logout));
@@ -42,4 +51,4 @@ module.exports = router;
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU5ZTc0YTk3NjRhN2ZiNjExMDlmNSIsImlhdCI6MTY3NTUzMzk0OH0.9nrcHc7pDq299biGNQAjAub2lH0Nlh2F2ifg7IlLlG0
 
 // thirduser@gmail.com
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU5ZWEwYTk3NjRhN2ZiNjExMDlmYSIsImlhdCI6MTY3NTUzMzk5OH0.j1xaJ31wn___ek-ndMjemmCUAY_hwKog1cRLzLg_k8k
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWQ1ODMzNTVmOGRmMWFlYTkzYTIwMSIsImlhdCI6MTY3NjQ5OTAyOH0.ghH2lCie_7mrgCtCljXlKwxpKl41S20SgKLGqFUDLWI

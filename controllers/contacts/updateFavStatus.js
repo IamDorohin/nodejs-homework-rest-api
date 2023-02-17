@@ -1,6 +1,6 @@
-const Contact = require("../models/contact");
+const Contact = require("../../models/contact");
 
-const updateById = async (req, res) => {
+const updateFavStatus = async (req, res) => {
   const { _id } = req.user;
   const { id } = req.params;
 
@@ -15,8 +15,7 @@ const updateById = async (req, res) => {
       .status(404)
       .json({ message: "You do not have permission to change this contact" });
   }
-
-  res.json(result);
+  return res.status(200).json(result);
 };
 
-module.exports = updateById;
+module.exports = updateFavStatus;

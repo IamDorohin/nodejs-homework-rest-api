@@ -7,7 +7,7 @@ const {
   updateById,
   updateFavStatus,
   removeById,
-} = require("../../controllers");
+} = require("../../controllers/contacts");
 const {
   addNewContactValidation,
   updateContactValidation,
