@@ -2,6 +2,8 @@ const express = require("express");
 const controllerWrapper = require("../../middlewares/controllerWrapper");
 const {
   registration,
+  verifyEmail,
+  resendVerifyEmail,
   login,
   logout,
   getCurrent,
@@ -10,6 +12,7 @@ const {
 } = require("../../controllers/users");
 const {
   registrationValidation,
+  verifyValidation,
   loginValidation,
   subscriptionTypeValidation,
 } = require("../../middlewares/usersValidationMiddleware");
@@ -23,6 +26,9 @@ router.post(
   registrationValidation,
   controllerWrapper(registration)
 );
+
+router.get("/verify/:verificationToken", controllerWrapper(verifyEmail));
+router.post("/verify", verifyValidation, controllerWrapper(resendVerifyEmail));
 
 router.patch(
   "/",
@@ -51,4 +57,7 @@ module.exports = router;
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU5ZTc0YTk3NjRhN2ZiNjExMDlmNSIsImlhdCI6MTY3NTUzMzk0OH0.9nrcHc7pDq299biGNQAjAub2lH0Nlh2F2ifg7IlLlG0
 
 // thirduser@gmail.com
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWQ1ODMzNTVmOGRmMWFlYTkzYTIwMSIsImlhdCI6MTY3NjQ5OTAyOH0.ghH2lCie_7mrgCtCljXlKwxpKl41S20SgKLGqFUDLWI
+//
+
+// iamdorohin@gmail.com
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjJhOWU5YTUyNzRhNDdmNTA0YjJkMiIsImlhdCI6MTY3Njg0OTIxOH0._ldUmDmNXQpiOXA_HtV8d4mbKnEo9QaQ7sLnDtRyhJU
