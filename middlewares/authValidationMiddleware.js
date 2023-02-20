@@ -48,7 +48,26 @@ const subscriptionTypeValidation = (req, res, next) => {
   if (error) {
     return res.status(400).json({
       message:
-        "INvalid type of subscription! Valid values are: starter, pro, business",
+        "Invalid type of subscription! Valid values are: starter, pro, business",
+    });
+  }
+  next(error);
+};
+
+const verifyValidation = (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        tlds: { allow: ["com", "net"] },
+      })
+      .required(),
+  });
+
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      message: "missing required field email",
     });
   }
   next(error);
@@ -56,6 +75,7 @@ const subscriptionTypeValidation = (req, res, next) => {
 
 module.exports = {
   registrationValidation,
+  verifyValidation,
   loginValidation,
   subscriptionTypeValidation,
 };

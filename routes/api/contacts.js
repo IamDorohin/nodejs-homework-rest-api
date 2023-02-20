@@ -12,7 +12,7 @@ const {
   addNewContactValidation,
   updateContactValidation,
   updateFavStatusValidation,
-} = require("../../middlewares/validationMiddleware");
+} = require("../../middlewares/contactsValidationMiddleware");
 const auth = require("../../middlewares/authMiddleware");
 const router = express.Router();
 
