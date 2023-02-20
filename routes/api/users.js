@@ -15,7 +15,7 @@ const {
   verifyValidation,
   loginValidation,
   subscriptionTypeValidation,
-} = require("../../middlewares/usersValidationMiddleware");
+} = require("../../middlewares/authValidationMiddleware");
 const auth = require("../../middlewares/authMiddleware");
 const uploadMiddleware = require("../../middlewares/uploadMiddleware");
 
@@ -49,15 +49,3 @@ router.get("/current", auth, controllerWrapper(getCurrent));
 router.get("/logout", auth, controllerWrapper(logout));
 
 module.exports = router;
-
-// firstuser@gmail.com
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGUyNWNjNWRjMGU4YjMxMGI0NGQyNCIsImlhdCI6MTY3NTUzMzg0MH0.F2iGm6hIXS44rE52Ydtu4gznJwnDP8uL2l2prVDOo4s
-
-// seconduser@gmail.com
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU5ZTc0YTk3NjRhN2ZiNjExMDlmNSIsImlhdCI6MTY3NTUzMzk0OH0.9nrcHc7pDq299biGNQAjAub2lH0Nlh2F2ifg7IlLlG0
-
-// thirduser@gmail.com
-//
-
-// iamdorohin@gmail.com
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjJhOWU5YTUyNzRhNDdmNTA0YjJkMiIsImlhdCI6MTY3Njg0OTIxOH0._ldUmDmNXQpiOXA_HtV8d4mbKnEo9QaQ7sLnDtRyhJU
